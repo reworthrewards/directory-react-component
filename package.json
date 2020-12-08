@@ -5,7 +5,8 @@
     "main": "./lib/Directory.js",
     "license": "MIT",
     "scripts": {
-        "build": "webpack"
+        "build": "webpack",
+        "prettify": "prettier --write src"
     },
     "peerDependencies": {
         "prop-types": "^15.6.0",
@@ -20,6 +21,7 @@
         "babel-preset-stage-0": "^6.24.1",
         "css-loader": "^3.5.1",
         "path": "^0.12.7",
+        "prettier": "2.2.1",
         "prop-types": "^15.6.0",
         "react": "^16.0.0",
         "react-dom": "^16.0.0",
@@ -33,5 +35,11 @@
         "react-virtualized": "^9.22.2",
         "styletron-engine-atomic": "^1.4.6",
         "styletron-react": "^5.2.7"
+    },
+    "prettier": {
+        "tabWidth": 4,
+        "trailingComma": "all",
+        "arrowParens": "avoid",
+        "jsxBracketSameLine": true
     }
 }
