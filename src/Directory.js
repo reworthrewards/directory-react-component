@@ -66,7 +66,7 @@ const Directory = () => {
         axios({
             method: "GET",
             url:
-                "https://e6di35qzm7.execute-api.us-west-2.amazonaws.com/latest/directory",
+            `${process.env.BASE_URL}/directory`,
         })
             .then(res => {
                 const { data } = res.data;
