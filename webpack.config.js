@@ -1,4 +1,5 @@
 const path = require('path');
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   mode: 'production',
@@ -44,5 +45,11 @@ module.exports = {
       amd: "ReactDOM",
       root: "ReactDOM"
     }
-  }
+  },
+  plugins: [
+    new Dotenv({
+      path: "./.env",
+      safe: true,
+    }),
+  ],
 };
