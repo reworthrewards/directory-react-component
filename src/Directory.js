@@ -3,7 +3,8 @@ import axios from "axios";
 // baseui imports
 import { Label2, Paragraph4 } from "baseui/typography";
 import { Spinner } from "baseui/spinner";
-import { Select, TYPE } from "baseui/select";
+import { Input } from "baseui/input";
+import Search from "baseui/icon/search";
 import { StatefulButtonGroup, MODE, SHAPE } from "baseui/button-group";
 import { Button, SIZE } from "baseui/button";
 import { ChevronLeft, ChevronDown } from "baseui/icon";
@@ -43,11 +44,10 @@ function HeaderApp() {
 
 const Directory = () => {
     const [offersData, setOffersData] = useState(null);
-    const [value, setValue] = useState([]);
-    const [searchByName, setSearchByName] = useState(null);
+    const [value, setValue] = useState("");
 
     // Table variables
-    const DATA = value.length > 0 ? searchByName : offersData;
+    const DATA = offersData;
     const COLUMNS = ["element"];
     const cache = new CellMeasurerCache({
         defaultHeight: 80,
@@ -56,17 +56,12 @@ const Directory = () => {
 
     useEffect(() => {
         apiConnection();
-    }, []);
-
-    useEffect(() => {
-        setSearchByName(value);
     }, [value]);
 
     const apiConnection = () => {
         axios({
             method: "GET",
-            url:
-            `${process.env.BASE_URL}/directory`,
+            url: `${process.env.BASE_URL}/directory?name=${value}`,
         })
             .then(res => {
                 const { data } = res.data;
@@ -83,15 +78,13 @@ const Directory = () => {
                 <Container>
                     <HeaderApp />
                     <div style={{ margin: "0.7rem 0" }}>
-                        <Select
-                            options={offersData}
-                            labelKey="name"
-                            valueKey="name"
-                            placeholder="Busca un negocio"
-                            maxDropdownHeight="200px"
-                            type={TYPE.search}
-                            onChange={({ value }) => setValue(value)}
+                        <Input
                             value={value}
+                            onChange={e => setValue(e.target.value)}
+                            startEnhancer={<Search size="18px" />}
+                            placeholder="Busca un negocio"
+                            clearable
+                            clearOnEscape
                         />
                     </div>
                     <div
