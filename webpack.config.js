@@ -1,11 +1,12 @@
 const path = require('path');
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   mode: 'production',
-  entry: './src/YOUR_COMPONENT.js',
+  entry: './src/Directory.js',
   output: {
     path: path.resolve('lib'),
-    filename: 'YOUR_COMPONENT.js',
+    filename: 'Directory.js',
     libraryTarget: 'commonjs2',
   },
   module: {
@@ -44,5 +45,11 @@ module.exports = {
       amd: "ReactDOM",
       root: "ReactDOM"
     }
-  }
+  },
+  plugins: [
+    new Dotenv({
+      path: "./.env",
+      safe: true,
+    }),
+  ],
 };
