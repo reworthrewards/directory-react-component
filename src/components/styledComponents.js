@@ -8,3 +8,11 @@ export const Flex = styled("div", {
     display: "flex",
     justifyContent: "space-between",
 });
+
+export const FilterButtonsContainer = styled("div", {
+    padding: "0.5rem 0",
+    borderTop: "solid 2px #EEEEEE",
+    "@media screen and (max-width: 450px)": {
+        overflowX: "scroll",
+    },
+});
