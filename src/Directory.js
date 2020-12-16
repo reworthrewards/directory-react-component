@@ -5,17 +5,25 @@ import { Label2, Paragraph4 } from "baseui/typography";
 import { Spinner } from "baseui/spinner";
 import { Input } from "baseui/input";
 import Search from "baseui/icon/search";
-import { StatefulButtonGroup, MODE, SHAPE } from "baseui/button-group";
+import { ButtonGroup, MODE, SHAPE } from "baseui/button-group";
 import { Button, SIZE } from "baseui/button";
-import { ChevronLeft, ChevronDown } from "baseui/icon";
 import { StyledTable, StyledRow, StyledCell } from "baseui/table";
 // styletron setup
 import { Client as Styletron } from "styletron-engine-atomic";
 import { Provider as StyletronProvider } from "styletron-react";
-import { LightTheme, BaseProvider, styled } from "baseui";
+import { LightTheme, BaseProvider } from "baseui";
 // local imports
-import { Container, Flex } from "./components/styledComponents";
+import {
+    Container,
+    Flex,
+    FilterButtonsContainer,
+} from "./components/styledComponents";
 import OfferItem from "./components/OfferItem";
+import {
+    FilterRestaurantIcon,
+    FilterRetailIcon,
+    FilterLocationIcon,
+} from "./ui/icons";
 // react-virtualized imports
 import List from "react-virtualized/dist/commonjs/List";
 import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
@@ -37,7 +45,6 @@ function HeaderApp() {
                     </Paragraph4>
                 </span>
             </div>
-            <Label2>Ver más</Label2>
         </Flex>
     );
 }
@@ -45,6 +52,7 @@ function HeaderApp() {
 const Directory = () => {
     const [offersData, setOffersData] = useState(null);
     const [value, setValue] = useState("");
+    const [selected, setSelected] = React.useState();
 
     // Table variables
     const DATA = offersData;
@@ -87,26 +95,37 @@ const Directory = () => {
                             clearOnEscape
                         />
                     </div>
-                    <div
-                        style={{
-                            padding: "0.5rem 0",
-                            borderTop: "solid 2px #EEEEEE",
-                        }}>
-                        <StatefulButtonGroup
+                    <FilterButtonsContainer>
+                        <ButtonGroup
                             mode={MODE.radio}
-                            initialState={{ selected: null }}
+                            selected={false}
+                            onClick={(event, index) => {
+                                setSelected(index);
+                            }}
                             shape={SHAPE.pill}
                             size={SIZE.compact}>
-                            <Button startEnhancer={ChevronLeft}>
+                            <Button
+                                startEnhancer={() => (
+                                    <FilterRestaurantIcon
+                                        $selected={selected}
+                                    />
+                                )}>
                                 Restaurante
                             </Button>
-                            <Button startEnhancer={ChevronLeft}>Retail</Button>
                             <Button
-                                endEnhancer={() => <ChevronDown size={14} />}>
+                                startEnhancer={() => (
+                                    <FilterRetailIcon $selected={selected} />
+                                )}>
+                                Retail
+                            </Button>
+                            <Button
+                                endEnhancer={() => (
+                                    <FilterLocationIcon $selected={selected} />
+                                )}>
                                 Sort
                             </Button>
-                        </StatefulButtonGroup>
-                    </div>
+                        </ButtonGroup>
+                    </FilterButtonsContainer>
                     {offersData ? (
                         <div
                             style={{
